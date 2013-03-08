@@ -1,7 +1,15 @@
 #!/bin/bash
 set -eu
 
-#charmrunner user
+create_charmrunner_user() {
+  juju-log "Adding system user: charmrunner"
+  useradd -r -c "charmrunner" -d "/var/lib/charmrunner" -s "/bin/false" -U charmrunner
+}
+getent passwd charmrunner >/dev/null || create_charmrunner_user
 
-# install upstart job
-#/etc/init/charmrunner.conf
+create_upstart_job() {
+  juju-log "Adding upstart job for charmrunner"
+  cp files/upstart.conf /etc/init/charmrunner.conf
+}
+[ -f /etc/init/charmrunner.conf ] || create_upstart_job
+

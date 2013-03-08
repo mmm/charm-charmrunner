@@ -1,16 +1,13 @@
 #!/bin/sh
 set -eu
 
-juju-log "config-changed is a no-op"
+apt-get -qq install -y zip
 
-install_charmrunner() {
-  local user=$1
-  local home=$2
-
-  apt-get -qq install -y zip
+install_latest_charmrunner() {
+  local branch=`config-get source_branch`
 
   rm -Rf /tmp/charmrunner
-  bzr branch lp:charmrunner /tmp/charmrunner
+  bzr branch $branch /tmp/charmrunner
   ( cd /tmp/charmrunner && python setup.py install )
 }
-install_charmrunner
+install_latest_charmrunner 
