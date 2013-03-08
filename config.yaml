@@ -4,6 +4,6 @@ options:
     default: "lp:charmrunner"
     description: branch to pull charmrunner from
   port:
-    type: integer
+    type: int
     default: 8080
     description: listen port
