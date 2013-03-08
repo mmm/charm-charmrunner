@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
 
-juju-log "upgrade-charm is a no-op"
+juju-log "upgrade-charm is a no-op... upgrade charmrunner using config"
+juju-log "for example, juju set branch=lp:charmrunner will reinstall the latest"
 
