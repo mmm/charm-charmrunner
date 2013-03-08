@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+PORT=`config-get port`
+HOSTNAME=`unit-get private-address`
+
+juju-log "Setting website URL to $HOSTNAME:$PORT"
+
+relation-set port=$PORT hostname=$HOSTNAME
+

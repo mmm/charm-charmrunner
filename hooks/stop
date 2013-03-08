@@ -1,0 +1,7 @@
+#!/bin/bash
+set -eu
+
+juju-log "stopping charmrunner"
+
+service charmrunner stop
+

@@ -1,0 +1,7 @@
+name: charmrunner
+summary: Charm test server
+description: |
+  Provide test plans for charm tests
+provides:
+  website:
+    interface: http

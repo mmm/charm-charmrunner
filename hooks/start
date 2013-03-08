@@ -1,0 +1,7 @@
+#!/bin/bash
+set -eu
+
+juju-log "starting charmrunner"
+
+service charmrunner start || true
+
