@@ -1,16 +1,21 @@
 #!/bin/sh
 set -eu
 
-apt-get -qq install -y zip
-
 install_latest_charmrunner() {
   local branch=`config-get source_branch`
 
   rm -Rf /tmp/charmrunner
   bzr branch $branch /tmp/charmrunner
+  #TODO ( cd /tmp/charmrunner && pip install -r requirements.txt && python setup.py install )
   ( cd /tmp/charmrunner && python setup.py install )
 }
 install_latest_charmrunner 
 
-open-port `config-get port`/TCP
-# just leave old ones open
+update_upstart_conf() {
+  juju-log "Updating upstart job for charmrunner"
+  cp files/upstart.conf /etc/init/charmrunner.conf
+  sed -i "s/CHARMRUNNER_PORT/`config-get port`/" /etc/init/charmrunner.conf
+}
+update_upstart_job
+
+open-port `config-get port`/TCP # just leave old ones open

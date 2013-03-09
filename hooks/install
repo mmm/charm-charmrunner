@@ -1,22 +1,29 @@
 #!/bin/bash
 set -eu
 
+apt-get -qq install -y zip mongodb
+
 create_charmrunner_user() {
   juju-log "Adding system user: charmrunner"
   useradd -r -c "charmrunner" -d "/var/lib/charmrunner" -s "/bin/false" -U charmrunner
 }
 getent passwd charmrunner >/dev/null || create_charmrunner_user
 
-create_upstart_job() {
-  juju-log "Adding upstart job for charmrunner"
-  cp files/upstart.conf /etc/init/charmrunner.conf
+create_charm_repo() {
+  for series in precise; do
+    mkdir -p /var/lib/charmrunner/charms/$series
+  done 
+  chmod -R a+r /var/lib/charmrunner
+  chown -Rf charmrunner:nogroup /var/lib/charmrunner
 }
-[ -f /etc/init/charmrunner.conf ] || create_upstart_job
+create_charm_repo
 
 add_misc_development_cruft() {
-  # not necessary once charmrunner installs from a package
   easy_install pymongo
   easy_install mongoqueue
   easy_install werkzeug
+
+  #TODO maybe clean up requirements.txt instead?
+  #apt-get -qq install -y python-pip build-essential python-dev
 }
 add_misc_development_cruft

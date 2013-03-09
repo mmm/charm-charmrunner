@@ -3,5 +3,6 @@ set -eu
 
 juju-log "starting charmrunner"
 
+service mongodb start || true
 service charmrunner start || true
 
