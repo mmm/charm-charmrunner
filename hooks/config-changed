@@ -16,6 +16,6 @@ update_upstart_conf() {
   cp files/upstart.conf /etc/init/charmrunner.conf
   sed -i "s/CHARMRUNNER_PORT/`config-get port`/" /etc/init/charmrunner.conf
 }
-update_upstart_job
+update_upstart_conf
 
 open-port `config-get port`/TCP # just leave old ones open
