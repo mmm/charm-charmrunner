@@ -13,3 +13,10 @@ create_upstart_job() {
 }
 [ -f /etc/init/charmrunner.conf ] || create_upstart_job
 
+add_misc_development_cruft() {
+  # not necessary once charmrunner installs from a package
+  easy_install pymongo
+  easy_install mongoqueue
+  easy_install werkzeug
+}
+add_misc_development_cruft
