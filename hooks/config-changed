@@ -11,3 +11,6 @@ install_latest_charmrunner() {
   ( cd /tmp/charmrunner && python setup.py install )
 }
 install_latest_charmrunner 
+
+open-port `config-get port`/TCP
+# just leave old ones open
