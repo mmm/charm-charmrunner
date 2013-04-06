@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+[ -f /usr/share/charm-helper/bash/file.bash ] && . /usr/share/charm-helper/bash/file.bash || lib/ch-file.sh
+
 install_latest_charmrunner() {
   local branch=`config-get source_branch`
 
@@ -9,13 +11,21 @@ install_latest_charmrunner() {
   #TODO ( cd /tmp/charmrunner && pip install -r requirements.txt && python setup.py install )
   ( cd /tmp/charmrunner && python setup.py install )
 }
-install_latest_charmrunner 
 
 update_upstart_conf() {
   juju-log "Updating upstart job for charmrunner"
-  cp files/upstart.conf /etc/init/charmrunner.conf
-  sed -i "s/CHARMRUNNER_PORT/`config-get port`/" /etc/init/charmrunner.conf
+  local port=`config-get port`
+  if [ -f .mongodb ]; then
+    . .mongodb
+  else
+    local mongo_host='localhost'
+    local mongo_port=27017
+  fi
+
+  ch_template_file 0644 root.root files/upstart.conf /etc/init/charmrunner.conf port mongo_host mongo_port
 }
+
+install_latest_charmrunner
 update_upstart_conf
 
 open-port `config-get port`/TCP # just leave old ones open
