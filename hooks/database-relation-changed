@@ -4,9 +4,8 @@ set -e
 
 mongo_host=`relation-get private-address`
 mongo_port=`relation-get port`
-mongo_port=${mongo_port:-27017}
 
-if [ -z "$mongo_host" ]; then
+if [ -z "$mongo_port" ]; then
   juju-log "Waiting for data on the wire"
   exit 0
 fi
@@ -15,5 +14,8 @@ cat > .mongodb <<EOF
 mongo_host=$mongo_host
 mongo_port=$mongo_port
 EOF
+
+stop mongodb || true
+apt-get remove mongodb
 
 hooks/config-changed
