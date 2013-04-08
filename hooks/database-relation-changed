@@ -16,7 +16,7 @@ mongo_port=$mongo_port
 EOF
 
 stop mongodb || true
-apt-get remove mongodb
+apt-get -y remove mongodb
 
 hooks/config-changed
 

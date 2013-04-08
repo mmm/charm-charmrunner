@@ -2,7 +2,7 @@
 
 rm -f .mongodb
 
-apt-get install mongodb
+apt-get install -y mongodb
 start mongodb || true
 
 hooks/config-changed
