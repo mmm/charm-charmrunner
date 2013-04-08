@@ -19,3 +19,7 @@ stop mongodb || true
 apt-get remove mongodb
 
 hooks/config-changed
+
+# Restart wasn't actually working. Had to stop then start.
+hooks/stop
+hooks/start
