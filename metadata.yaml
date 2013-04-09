@@ -2,6 +2,9 @@ name: charmrunner
 summary: Charm test server
 description: |
   Provide test plans for charm tests
+requires:
+  database:
+    interface: mongodb
 provides:
   website:
     interface: http

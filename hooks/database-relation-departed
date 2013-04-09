@@ -1,0 +1,11 @@
+#!/bin/sh
+
+rm -f .mongodb
+
+apt-get install -y mongodb
+start mongodb || true
+
+hooks/config-changed
+
+hooks/stop
+hooks/start
