@@ -6,5 +6,5 @@ requires:
   database:
     interface: mongodb
 provides:
-  website:
+  tpaas:
     interface: http
